@@ -17,25 +17,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-setup:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: "Install local deepsparse (with: [dev,server])"
-        run: pip3 install -e .[dev,server]
   base-tests:
     runs-on: ubuntu-20.04
-    needs: test-setup
     steps:
       - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: pip3 install .[dev]
       - name: Run base tests
         run: make test
   # cli-tests:
-  #   runs-on: ubuntu-22.04
-  #   needs: test-setup
+  #   runs-on: ubuntu-20.04
   #   steps:
-      # - uses: actions/checkout@v2
-  #     - name: Run CLI tests
+  #     - uses: actions/checkout@v2
+  #     - name: Install dependencies
+  #       run: pip3 install .[dev]
+  #     - name: Run base tests
   #       run: make test TARGETS=cli
   # local-install-test:
   #   runs-on: ubuntu-20.04
