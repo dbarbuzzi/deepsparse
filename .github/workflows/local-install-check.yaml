@@ -17,11 +17,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  smoke-tests:
+  base-smoke-tests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: pip3 install .[dev]
-      - name: Run smoke tests
-        run: PYTEST_ARGS="-m smoke" make test TARGETS=cli,examples
+      - name: Run base smoke tests
+        run: PYTEST_ARGS="-m smoke" make test
+  cli-smoke-tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: pip3 install .[dev]
+      - name: Run CLI smoke tests
+        run: PYTEST_ARGS="-m smoke" make test TARGETS=cli,nounit
+  examples-smoke-tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: pip3 install .[dev]
+      - name: Run examples smoke tests
+        run: PYTEST_ARGS="-m smoke" make test TARGETS=examples,nounit
