@@ -27,12 +27,14 @@ jobs:
     runs-on: ubuntu-20.04
     needs: test-setup
     steps:
+      - uses: actions/checkout@v2
       - name: Run base tests
         run: make test
   # cli-tests:
   #   runs-on: ubuntu-22.04
   #   needs: test-setup
   #   steps:
+      # - uses: actions/checkout@v2
   #     - name: Run CLI tests
   #       run: make test TARGETS=cli
   # local-install-test:
