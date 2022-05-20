@@ -17,35 +17,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  base-tests:
+  smoke-tests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: pip3 install .[dev]
-      - name: Run base tests
-        run: make test
-  # cli-tests:
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Install dependencies
-  #       run: pip3 install .[dev]
-  #     - name: Run base tests
-  #       run: make test TARGETS=cli
-  # local-install-test:
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: "⚙️ Install local deepsparse"
-  #       run: pip3 install .
-  #     - name: "deepsparse.benchmark"
-  #       run: deepsparse.benchmark zoo:cv/classification/mobilenet_v1-1.0/pytorch/sparseml/imagenet/pruned_quant-moderate -w 1 -t 1
-  # local-develop-test:
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: "⚙️ Install local develop deepsparse"
-  #       run: pip3 install -e .
-  #     - name: "deepsparse.benchmark"
-  #       run: deepsparse.benchmark zoo:cv/classification/mobilenet_v1-1.0/pytorch/sparseml/imagenet/pruned_quant-moderate -w 1 -t 1
+      - name: Run smoke tests
+        run: PYTEST_ARGS="-m smoke" make test TARGETS=cli,examples

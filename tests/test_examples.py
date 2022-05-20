@@ -54,6 +54,7 @@ if SRC_DIRS is not None:
         ]
     ),
 )
+@pytest.mark.smoke
 def test_check_correctness(model: Model, batch_size: int):
     m = model()
     testargs = f"""
@@ -78,6 +79,7 @@ def test_check_correctness(model: Model, batch_size: int):
         ]
     ),
 )
+@pytest.mark.smoke
 def test_run_benchmark(model: Model, batch_size: int):
     m = model()
     testargs = f"""
@@ -102,6 +104,7 @@ def test_run_benchmark(model: Model, batch_size: int):
         ]
     ),
 )
+@pytest.mark.smoke
 def test_classification(model_name: str, batch_size: int):
     testargs = f"""
         classification.py
@@ -125,6 +128,7 @@ def test_classification(model_name: str, batch_size: int):
         ]
     ),
 )
+@pytest.mark.smoke
 def test_detection(model_name: str, batch_size: int):
     testargs = f"""
         detection.py
