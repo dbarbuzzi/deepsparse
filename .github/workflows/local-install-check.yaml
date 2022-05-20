@@ -1,5 +1,9 @@
 name: Local Install Checks
-on: 
+
+env:
+  SPARSEZOO_TEST_MODE: true
+
+on:
   push:
     branches:
       - main
@@ -13,19 +17,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  local-install-test:
+  base-tests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: "⚙️ Install local deepsparse"
-        run: pip3 install .
-      - name: "deepsparse.benchmark"
-        run: deepsparse.benchmark zoo:cv/classification/mobilenet_v1-1.0/pytorch/sparseml/imagenet/pruned_quant-moderate -w 1 -t 1
-  local-develop-test:
+      - name: Install dependencies
+        run: pip3 install .[dev]
+      - name: Run base tests
+        run: make test
+  cli-smoke-tests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: "⚙️ Install local develop deepsparse"
-        run: pip3 install -e .
-      - name: "deepsparse.benchmark"
-        run: deepsparse.benchmark zoo:cv/classification/mobilenet_v1-1.0/pytorch/sparseml/imagenet/pruned_quant-moderate -w 1 -t 1
+      - name: Install dependencies
+        run: pip3 install .[dev,server]
+      - name: Run CLI smoke tests
+        run: PYTEST_ARGS="-m smoke" make test TARGETS=cli,nobase
+  examples-smoke-tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: pip3 install .[dev]
+      - name: Run examples smoke tests
+        run: PYTEST_ARGS="-m smoke" make test TARGETS=examples,nobase
