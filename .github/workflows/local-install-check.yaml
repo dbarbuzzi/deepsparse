@@ -17,14 +17,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  base-smoke-tests:
+  base-tests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: pip3 install .[dev]
-      - name: Run base smoke tests
-        run: PYTEST_ARGS="-m smoke" make test
+      - name: Run base tests
+        run: make test
   cli-smoke-tests:
     runs-on: ubuntu-20.04
     steps:
