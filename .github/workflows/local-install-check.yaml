@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
-        run: pip3 install .[dev]
+        run: pip3 install .[dev,server]
       - name: Run CLI smoke tests
         run: PYTEST_ARGS="-m smoke" make test TARGETS=cli,nounit
   examples-smoke-tests:

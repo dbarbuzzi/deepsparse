@@ -46,15 +46,12 @@ if SRC_DIRS is not None:
     "model, batch_size",
     (
         [
-            pytest.param(
-                mobilenet_v1,
-                b,
-            )
-            for b in [1, 8, 64]
+            pytest.param(mobilenet_v1, 1, marks=pytest.mark.smoke),
+            pytest.param(mobilenet_v1, 8, marks=pytest.mark.smoke),
+            pytest.param(mobilenet_v1, 64),
         ]
     ),
 )
-@pytest.mark.smoke
 def test_check_correctness(model: Model, batch_size: int):
     m = model()
     testargs = f"""
@@ -71,15 +68,12 @@ def test_check_correctness(model: Model, batch_size: int):
     "model, batch_size",
     (
         [
-            pytest.param(
-                mobilenet_v1,
-                b,
-            )
-            for b in [1, 8, 64]
+            pytest.param(mobilenet_v1, 1, marks=pytest.mark.smoke),
+            pytest.param(mobilenet_v1, 8, marks=pytest.mark.smoke),
+            pytest.param(mobilenet_v1, 64),
         ]
     ),
 )
-@pytest.mark.smoke
 def test_run_benchmark(model: Model, batch_size: int):
     m = model()
     testargs = f"""
@@ -96,15 +90,12 @@ def test_run_benchmark(model: Model, batch_size: int):
     "model_name, batch_size",
     (
         [
-            pytest.param(
-                "mobilenet_v1",
-                b,
-            )
-            for b in [1, 8, 64]
+            pytest.param("mobilenet_v1", 1, marks=pytest.mark.smoke),
+            pytest.param("mobilenet_v1", 8, marks=pytest.mark.smoke),
+            pytest.param("mobilenet_v1", 64),
         ]
     ),
 )
-@pytest.mark.smoke
 def test_classification(model_name: str, batch_size: int):
     testargs = f"""
         classification.py
@@ -120,15 +111,12 @@ def test_classification(model_name: str, batch_size: int):
     "model_name, batch_size",
     (
         [
-            pytest.param(
-                "yolo_v3",
-                b,
-            )
-            for b in [1, 8, 64]
+            pytest.param("yolo_v3", 1, marks=pytest.mark.smoke),
+            pytest.param("yolo_v3", 8, marks=pytest.mark.smoke),
+            pytest.param("yolo_v3", 64),
         ]
     ),
 )
-@pytest.mark.smoke
 def test_detection(model_name: str, batch_size: int):
     testargs = f"""
         detection.py
